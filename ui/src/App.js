@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import * as api from './api';
 
 class App extends Component {
   constructor(props) {
@@ -12,18 +12,13 @@ class App extends Component {
   }
 
   getCurrentGameScore() {
-    this.setState({ current: { player1: { score: 5 }, player2: { score: 2 } } });
+    api.getCurrentGame()
+      .then(game => this.setState({ current: game }));
   }
 
   getGameScores() {
-    this.setState({
-      games: [
-        { player1: { score: 11 }, player2: { score: 5 } },
-        { player1: { score: 12 }, player2: { score: 10 } },
-        { player1: { score: 8 }, player2: { score: 11 } },
-        { player1: { score: 11 }, player2: { score: 5 } },
-      ]
-    });
+    api.getGames()
+      .then(games => this.setState({ games: games }));
   }
 
   renderHistory() {
