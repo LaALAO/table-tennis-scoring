@@ -23,25 +23,19 @@ class App extends Component {
 
   componentDidMount() {
     this.update();
+    api.getGames().then(games => this.setState({ games: games }));
   }
 
   update() {
     console.log('checking...');
-    Promise.all([this.getCurrentGameScore(), this.getGameScores()])
-      .then(() => setTimeout(this.update.bind(this), 3000));
-  }
-
-  getCurrentGameScore() {
-    api.getCurrentGame().then(game => {
-      this.setState({ current: game });
-    });
-  }
-
-  getGameScores() {
-    api.getGames().then(games => {
-      let filteredGames = games.filter(game => game.score);
-      this.setState({ games: filteredGames });
-    });
+    api.getCurrentGame()
+      .then(game => {
+        this.setState({ current: game });
+        if (game.score.player1 === 0 && game.score.player2 === 0) {
+          api.getGames().then(games => this.setState({ games: games }));
+        }
+      })
+    .then(() => setTimeout(this.update.bind(this), 3000));
   }
 
   render() {
