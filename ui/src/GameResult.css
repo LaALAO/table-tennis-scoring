@@ -1,11 +1,12 @@
 .rcorners {
     border-radius: 25px;
     border: 1px solid black;
-    padding: 2px; 
+    padding: 10px 2px; 
     width: 70px;
-    height: 30px; 
     background-color: white;
     text-align: center;
     font-weight: bond;
     display: inline-block;
+    vertical-align: middle;
+    box-shadow: 9px 10px 5px 0px rgba(0,0,0,0.75);
 }

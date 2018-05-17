@@ -9,7 +9,7 @@
     text-align: center;
     color: rgb(243, 94, 243);
     font-weight: bold;
-    font-style: italic;   
+    font-style: italic;
 }
 
 .playerScore div {
@@ -19,5 +19,6 @@
     background-color: white;
     border: 1px solid purple;
     padding: 50px 0px;
+    box-shadow: 9px 10px 5px 0px rgba(0,0,0,0.75);
 }
 
