@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./App.css";
 import * as api from './api';
 import PlayerScore from './PlayerScore';
+import Logo from './Logo';
+import History from './History';
 
 class App extends Component {
   constructor(props) {
@@ -10,6 +12,11 @@ class App extends Component {
       current: { player1: { score: 3 }, player2: { score: 3 } },
       games: []
     };
+  }
+
+  componentDidMount() {
+    this.getCurrentGameScore();
+    this.getGameScores();
   }
 
   getCurrentGameScore() {
@@ -23,10 +30,6 @@ class App extends Component {
   }
 
   renderHistory() {
-    console.log('test');
-    return this.state.games.map(game => (
-      <div>{game.player1.score}:{game.player2.score}</div>
-    ));
   }
 
   render() {
@@ -36,13 +39,8 @@ class App extends Component {
       <div>
         <PlayerScore name="Player 1" score={current.player1.score} />
         <PlayerScore name="Player 2" score={current.player2.score} />
-        <button onClick={this.getCurrentGameScore.bind(this)}>Get Current Score</button>
-        <button onClick={this.getGameScores.bind(this)}>Get all scores</button>
-        <div>
-          <h1>history</h1>
-          {this.renderHistory()}
-        </div>
-
+        <Logo />
+        <History games={this.state.games} />
       </div>
     );
   }
