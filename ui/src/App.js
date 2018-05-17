@@ -32,16 +32,20 @@ class App extends Component {
   }
 
   getCurrentGameScore() {
-    api.getCurrentGame().then(game => this.setState({ current: game }));
+    api.getCurrentGame().then(game => {
+      this.setState({ current: game });
+    });
   }
 
   getGameScores() {
-    api.getGames().then(games => this.setState({ games: games }));
+    api.getGames().then(games => {
+      let filteredGames = games.filter(game => game.score);
+      this.setState({ games: filteredGames });
+    });
   }
 
   render() {
     let { current, games } = this.state;
-
     return (
       <div>
         <PlayerScore name={current.player1} score={current.score.player1} />

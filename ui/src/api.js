@@ -12,5 +12,5 @@ export const getGames = () => {
 
 export const getCurrentGame = () => {
     return http.get('/games/current')
-        .then(response => response.data.payload);
+        .then(response => response.data);
 };
