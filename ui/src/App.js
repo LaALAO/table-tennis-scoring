@@ -42,8 +42,8 @@ class App extends Component {
     let { current, games } = this.state;
     return (
       <div className="App">
-        <PlayerScore name={current.player1} score={current.score.player1} />
-        <PlayerScore name={current.player2} score={current.score.player2} />
+        <PlayerScore className="red-player" name={current.player1} score={current.score.player1} />
+        <PlayerScore className="blue-player" name={current.player2} score={current.score.player2} />
         <Logo />
         <History games={this.state.games} />
       </div>

@@ -5,20 +5,31 @@
 
 }
 
-.playerScore h1 {
-    text-align: center;
-    color: rgb(243, 94, 243);
-    font-weight: bold;
-    font-style: italic;
-}
-
 .playerScore div {
     font-size: 235px;
- 
     text-align: center;
-    background-color: white;
-    border: 1px solid purple;
+    /* background-color: #73B8F3; */
     padding: 50px 0px;
     box-shadow: 9px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.blue-player.playerScore div {
+    background-color: #73B8F3;  
+    border: 5px solid #2833C7;
+    
+}
+.blue-player.playerScore h1 {
+    color: #2833C7;
+}
+
+
+.red-player.playerScore h1 {
+    color: #FF0000;
+}
+
+.red-player.playerScore div {
+    background-color: #DD6060;  
+    border: 5px solid #FF0000;
+  
 }
 
