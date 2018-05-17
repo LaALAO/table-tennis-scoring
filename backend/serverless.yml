@@ -1,0 +1,106 @@
+service: tableTennisService
+provider:
+  name: aws
+  runtime: nodejs6.10
+  region: ap-southeast-2
+  environment:
+    TT_CURRENT_TABLE: ${opt:stage, 'development'}-TT-Game-Current
+    TT_ARHIEVE_TABLE: ${opt:stage, 'development'}-TT-Game-Archieve
+  iamRoleStatements:  
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:BatchGetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:ap-southeast-2:*:*"
+functions:
+  newGame:
+    handler: handler.createNewGame
+    events:
+      - http:
+          path: /games/new
+          cors: true
+          method: post
+  getCurrentGame:
+    handler: handler.getCurrentGame
+    events:
+      - http:
+          path: /games/current
+          cors: true
+          method: get
+  getRecentGames:
+    handler: handler.getRecentGames
+    events:
+      - http:
+          path: /games/
+          cors: true
+          method: get          
+  updateScore:
+    handler: handler.updateScore
+    events:
+      - http:
+          path: /games/increaseScore/{playerId}
+          cors: true
+          method: post
+  recordGame:
+    handler: handler.recordGame
+    events:
+      - http:
+          path: /games
+          cors: true
+          method: post     
+resources:
+  Resources:
+    CurrentGameTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${opt:stage, 'development'}-TT-Game-Current
+    GameArhievesTable:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+          -
+            AttributeName: dummyHash
+            AttributeType: S            
+          -
+            AttributeName: startedAt
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+        - IndexName: StartedAtIndex
+          KeySchema:
+          - AttributeName: dummyHash
+            KeyType: HASH            
+          - AttributeName: startedAt
+            KeyType: RANGE
+          Projection:
+            ProjectionType: ALL                
+          ProvisionedThroughput:
+            ReadCapacityUnits: 1
+            WriteCapacityUnits: 1          
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1                   
+        TableName: ${opt:stage, 'development'}-TT-Game-Archieve
