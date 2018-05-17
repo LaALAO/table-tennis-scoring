@@ -2,18 +2,22 @@
     min-width: 500px;
     display: inline-block;
     padding: 36px;
+
 }
 
 .playerScore h1 {
     text-align: center;
+    color: rgb(243, 94, 243);
+    font-weight: bold;
+    font-style: italic;   
 }
 
 .playerScore div {
     font-size: 235px;
-    font-weight: bold;
+ 
     text-align: center;
     background-color: white;
-    border: 1px solid black;
+    border: 1px solid purple;
     padding: 50px 0px;
 }
 
