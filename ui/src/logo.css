@@ -1,0 +1,21 @@
+
+.sponser{
+    text-align: left;
+    color: rgb(243, 94, 243);
+    font-size:18px;
+    padding: 8px 8px;
+}
+
+.logo{
+    text-align: center;
+    color: rgb(243, 94, 243);
+    font-size:55px;
+    margin-left:130px;
+}
+.sponsor-background{
+    background-color: black;
+    width: 700px;
+    padding: 1px;
+    border: 10px solid purple;
+    margin: auto;
+}
