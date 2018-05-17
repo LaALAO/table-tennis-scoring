@@ -55,7 +55,8 @@ const archieveGame = (game, callback) => {
   })
 };
 
-const addNewGame = (callback) => {
+const addNewGame = (callback, postedGame) => {
+  console.log("postedGame", postedGame)
   const createNewGameParams = {
     TableName: process.env.TT_CURRENT_TABLE,
     Item: {
@@ -66,8 +67,9 @@ const addNewGame = (callback) => {
       },
       startedAt: new Date().getTime().toString(),
       dummyHash,
-      player1: "Player 1",
-      player2: "Player 2",
+      player1: "Player Red",
+      player2: "Player Blue",
+      ...postedGame
     }
   };
   console.log("addNewGame", createNewGameParams)
@@ -82,6 +84,7 @@ const addNewGame = (callback) => {
 }
 
 module.exports.createNewGame = (event, context, callback) => {
+  const postedGame = JSON.parse(event.body);
   getCurrentGame((game) => {
     if (game) {
       archieveGame(game, (err) => {
@@ -95,7 +98,7 @@ module.exports.createNewGame = (event, context, callback) => {
               statusCode: 200,
               body: JSON.stringify(newGame),
             })
-        })
+        }, postedGame)
       });
     } else {
       addNewGame((newGame) => {
@@ -103,7 +106,7 @@ module.exports.createNewGame = (event, context, callback) => {
           statusCode: 200,
           body: JSON.stringify(newGame),
         })
-      })
+      }, postedGame)
     }
   });
 };
